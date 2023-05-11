@@ -4,5 +4,11 @@ import programs from "./view/radioPrograms.js";
 window.onload = function () {
   const getData = Module.getData;
 
-  programs(getData);
+  programs();
+
+  document.addEventListener("updateForm", (event) => {
+    const { selectedProgram } = event.detail;
+
+    Module.setDate({ selectedProgram });
+  });
 };

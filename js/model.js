@@ -1,3 +1,5 @@
+import { Logger } from "./util/logger/Logger.js";
+
 let data = {
   selectedProgram: 0.1,
   programs: {
@@ -12,4 +14,9 @@ function getData() {
   return { ...data };
 }
 
-export { getData };
+function setDate(newDate) {
+  data = { ...data, ...newDate };
+  Logger.success(data);
+}
+
+export { getData, setDate };
