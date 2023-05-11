@@ -1,4 +1,5 @@
 import { Logger } from "../util/logger/Logger.js";
+import { updateModel } from "./../util/updateModel.js";
 
 function init(getData) {
   // Если не функция, в консоли отобразится ошибка
@@ -25,23 +26,18 @@ function init(getData) {
 
   radioBtns.forEach((radioBtn) => {
     // Используем метод forEach и на каждой итерации(на каждую кнопку)будем отлавливать событие
-    radioBtn.addEventListener("change", function (event) {
+    radioBtn.addEventListener("change", function () {
       //Отлавливаем событие
       Logger.info(this);
       Logger.info(parseFloat(this.value));
       //Метод parseFloat переводит в числа и отсеивает буквы, number в свою очередь не отсеивает буквы.
       Logger.info(this.id);
 
-      event.target.dispatchEvent(
-        new CustomEvent("updateForm", {
-          bubbles: true,
-          detail: {
-            selectedProgram: parseFloat(this.value),
-            onUpdate: "radioProgram",
-            id: this.id,
-          },
-        })
-      );
+      updateModel(this, {
+        selectedProgram: parseFloat(this.value),
+        onUpdate: "radioProgram",
+        id: this.id,
+      });
     });
   });
 }
