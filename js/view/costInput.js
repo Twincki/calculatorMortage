@@ -58,10 +58,10 @@ function init(getData) {
     }
 
     //Обновить модель
-    // updateModel(input, {
-    //   cost: parseInt(cleaveInput.getRawValue()),
-    //   onUpdate: UPDATE_EVENTS.INPUT_COST,
-    // });
+    updateModel(input, {
+      cost: parseInt(cleaveInput.getRawValue()),
+      onUpdate: UPDATE_EVENTS.INPUT_COST,
+    });
   });
 }
 
