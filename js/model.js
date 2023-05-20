@@ -1,4 +1,5 @@
 import { Logger } from "./util/logger/Logger.js";
+import { UPDATE_EVENTS } from "./consts.js";
 
 let data = {
   selectedProgram: 0.1,
@@ -18,8 +19,16 @@ function getData() {
 }
 
 function setDate(newDate) {
+  // //Обновление цены
+  // //Если стоимость меньше минимальной цены
+  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_COST) {
+    if (newDate.cost < data.minPrice) newDate.cost = data.minPrice;
+    //Если стоимость больше максимальной цены
+    if (newDate.cost > data.maxPrice) newDate.cost = data.maxPrice;
+  }
+
   data = { ...data, ...newDate };
-  Logger.success(data);
+  Logger.success("[UPDATED MODEL DATA]", data);
 }
 
 export { getData, setDate };

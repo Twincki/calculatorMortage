@@ -13,12 +13,10 @@ window.onload = function () {
   //init cost input
   costInput(getData);
 
-  document.addEventListener("updateForm", (event) => {
-    const { selectedProgram } = event.detail;
-
-    Module.setDate({ selectedProgram });
+  document.addEventListener("updateForm", ({ detail }) => {
+    Module.setDate(detail);
 
     //Update results block
-    updateResultView(selectedProgram);
+    updateResultView(detail.selectedProgram);
   });
 };

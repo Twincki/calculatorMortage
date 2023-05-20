@@ -1,4 +1,4 @@
-export function updateModel(element, data) {
+function updateModel(element, data) {
   element.dispatchEvent(
     new CustomEvent("updateForm", {
       bubbles: true,
@@ -6,3 +6,5 @@ export function updateModel(element, data) {
     })
   );
 }
+
+export default updateModel;

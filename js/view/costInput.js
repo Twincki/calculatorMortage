@@ -1,3 +1,6 @@
+import { UPDATE_EVENTS } from "../consts.js";
+import updateModel from "./../util/updateModel.js";
+
 function init(getData) {
   const input = document.querySelector("#input-cost");
 
@@ -10,11 +13,13 @@ function init(getData) {
   };
 
   const cleaveInput = new Cleave(input, settingCleave);
+  //setRawValue устанавливает базовое значение
   cleaveInput.setRawValue(cost);
 
+  //Событие добавляющее ошибку при неверном минимальном и максимальном значении
   input.addEventListener("input", function () {
+    //getRawValue возвращает записанное значение
     const value = parseInt(cleaveInput.getRawValue());
-    //Событие добавляющее ошибку при неверном минимальном и максимальном значении
 
     if (value < minPrice || value > maxPrice) {
       input.closest(".param__details").classList.add("param__details--error");
@@ -26,24 +31,37 @@ function init(getData) {
         .classList.remove("param__details--error");
     }
 
-    input.addEventListener("change", function () {
-      const value = parseInt(cleaveInput.getRawValue());
-      //Событие при ошибке возвращает минимальное и максимальное значение
-
-      if (value < minPrice) {
-        input
-          .closest(".param__details")
-          .classList.remove("param__details--error");
-        cleaveInput.setRawValue(minPrice);
-      }
-
-      if (value > maxPrice) {
-        input
-          .closest(".param__details")
-          .classList.remove("param__details--error");
-        cleaveInput.setRawValue(maxPrice);
-      }
+    //Обновить модель
+    updateModel(input, {
+      cost: parseInt(cleaveInput.getRawValue()),
+      onUpdate: UPDATE_EVENTS.INPUT_COST,
     });
+  });
+
+  // TODO: Разобраться почему делается два раза
+  //Событие при ошибке возвращает минимальное и максимальное значение
+  input.addEventListener("change", function () {
+    const value = parseInt(cleaveInput.getRawValue());
+
+    if (value < minPrice) {
+      input
+        .closest(".param__details")
+        .classList.remove("param__details--error");
+      cleaveInput.setRawValue(minPrice);
+    }
+
+    if (value > maxPrice) {
+      input
+        .closest(".param__details")
+        .classList.remove("param__details--error");
+      cleaveInput.setRawValue(maxPrice);
+    }
+
+    //Обновить модель
+    // updateModel(input, {
+    //   cost: parseInt(cleaveInput.getRawValue()),
+    //   onUpdate: UPDATE_EVENTS.INPUT_COST,
+    // });
   });
 }
 
