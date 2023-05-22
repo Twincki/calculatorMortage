@@ -1,26 +1,46 @@
-import * as Module from "./model.js";
+import * as Model from "./model.js";
 import programs from "./view/radioPrograms.js";
 import updateResultView from "./view/updateResultsView.js";
+import { UPDATE_EVENTS } from "./consts.js";
 
 import costInput from "./view/costInput.js";
 import costRange from "./view/costRange.js";
 
 window.onload = function () {
-  const getData = Module.getData;
+  const getData = Model.getData;
+  const { selectedProgram } = getData();
 
-  //init programs
+  // Инициализация базовых значений
   programs(getData);
 
-  //init cost input
-  costInput(getData);
+  // Обновление процентной ставки программ
+  updateResultView(selectedProgram);
 
-  //init cost Range
-  costRange(getData);
+  // Инициализация значения стоимости недвижимости
+  const cleaveCost = costInput(getData);
+
+  // Инициализация значений слайдера стоимости недвижимости
+  const sliderCost = costRange(getData);
 
   document.addEventListener("updateForm", ({ detail }) => {
-    Module.setDate(detail);
+    Model.setDate(detail);
 
-    //Update results block
+    // Обновление всего что связанно с внешним видом формы основываясь на  данных из модели
+    updateFormAndSlider(getData());
+
+    // Обновление значений на странице
     updateResultView(detail.selectedProgram);
   });
+
+  function updateFormAndSlider({ onUpdate, cost }) {
+    // Значение стоимости недвижимости
+    if (onUpdate !== UPDATE_EVENTS.INPUT_COST) {
+      cleaveCost.setRawValue(cost);
+    }
+
+    // Значение стоимости недвмижимости слайдера
+    if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
+      sliderCost.noUiSlider.set(cost);
+    }
+  }
 };

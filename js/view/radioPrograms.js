@@ -27,14 +27,14 @@ function init(getData) {
 
   // Используем метод forEach и на каждой итерации(на каждую кнопку)будем отлавливать событие
   radioBtns.forEach((radioBtn) => {
-    //Отлавливаем событие
+    // Отлавливаем событие
     radioBtn.addEventListener("change", function () {
       Logger.info(this.id);
 
       updateModel(this, {
         selectedProgram: parseFloat(this.value),
         onUpdate: UPDATE_EVENTS.RADIO_PROGRAM,
-        //id хранит название программы которую выбирает пользователь
+        // id хранит название программы которую выбирает пользователь
         id: this.id,
       });
     });

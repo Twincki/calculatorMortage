@@ -26,21 +26,22 @@ function init(getData) {
     }),
   });
 
+  // Метод on позволяет следить за событиями
   slider.noUiSlider.on("slide", function () {
-    //Функция get() используется ябиблиотекой noUiSlider и возвращает значение слайдера
+    // Функция get() используется библиотекой noUiSlider и возвращает значение слайдера
     const sliderValues = slider.noUiSlider.get();
 
-    //Используем метод split для возвращения 0 строки в массиве
+    // Используем метод split для возвращения 0 строки в массиве
     const firstValue = sliderValues.split(".")[0];
 
-    /* Парсим значение слайдера в строку для дальнеешего возврата
-     при помощи replace с заменой пробелов */
+    /* Парсим значение слайдера для дальнеешего возврата
+     при помощи replace с заменой пробелов, удаляем пробелы при помощи регулярных выражений */
     const removeSpaces = parseInt(firstValue.replace(/ /g, ""));
 
-    //Обновить модель
+    // Обновление базовых знчаений
     updateModel(slider, {
       cost: removeSpaces,
-      onUpdate: UPDATE_EVENTS.COST_SLIDER,
+      onUpdate: UPDATE_EVENTS.SLIDER_COST,
     });
   });
 
@@ -52,6 +53,8 @@ function init(getData) {
   // slider.noUiSlider.on("update", (...args) => {
   //   debounceRange(...args);
   // });
+
+  return slider;
 }
 
 export default init;

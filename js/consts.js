@@ -1,6 +1,7 @@
 // События для обновления updateModel
 export const UPDATE_EVENTS = {
-  INPUT_COST: "inputCost",
+  NULL: "",
   RADIO_PROGRAM: "radioProgram",
-  COST_SLIDER: "costSlider",
+  INPUT_COST: "inputCost",
+  SLIDER_COST: "costSlider",
 };

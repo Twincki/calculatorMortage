@@ -13,12 +13,12 @@ function init(getData) {
   };
 
   const cleaveInput = new Cleave(input, settingCleave);
-  //setRawValue устанавливает базовое значение
+  // setRawValue устанавливает базовое значение, используется библиотекой
   cleaveInput.setRawValue(cost);
 
-  //Событие добавляющее ошибку при неверном минимальном и максимальном значении
+  // Событие добавляющее ошибку при неверном минимальном и максимальном значении
   input.addEventListener("input", function () {
-    //getRawValue возвращает записанное значение
+    // getRawValue возвращает записанное значение, используется библиотекой
     const value = parseInt(cleaveInput.getRawValue());
 
     if (value < minPrice || value > maxPrice) {
@@ -31,15 +31,14 @@ function init(getData) {
         .classList.remove("param__details--error");
     }
 
-    //Обновить модель
+    // Обновить модель
     updateModel(input, {
       cost: parseInt(cleaveInput.getRawValue()),
       onUpdate: UPDATE_EVENTS.INPUT_COST,
     });
   });
 
-  // TODO: Разобраться почему делается два раза
-  //Событие при ошибке возвращает минимальное и максимальное значение
+  // Событие при ошибке возвращает минимальное и максимальное значение
   input.addEventListener("change", function () {
     const value = parseInt(cleaveInput.getRawValue());
 
@@ -56,13 +55,8 @@ function init(getData) {
         .classList.remove("param__details--error");
       cleaveInput.setRawValue(maxPrice);
     }
-
-    //Обновить модель
-    updateModel(input, {
-      cost: parseInt(cleaveInput.getRawValue()),
-      onUpdate: UPDATE_EVENTS.INPUT_COST,
-    });
   });
+  return cleaveInput;
 }
 
 export default init;
