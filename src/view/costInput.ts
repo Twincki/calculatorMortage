@@ -1,13 +1,15 @@
 import Cleave from "cleave.js";
-import { UPDATE_EVENTS } from "../shared/consts/consts.js";
-import updateModel from "../shared/util/updateModel.js";
+import { UPDATE_EVENTS } from "shared/consts/consts";
+import { Model } from "shared/types/common";
+import { CleaveOptions } from "cleave.js/options";
+import { updateModel } from "shared/util/updateModel";
 
-function init(getData) {
-  const input = document.querySelector("#input-cost");
+function init(getData: () => Model) {
+  const input = document.querySelector("#input-cost") as HTMLInputElement;
 
   const { minPrice, maxPrice, cost } = getData();
 
-  const settingCleave = {
+  const settingCleave: CleaveOptions = {
     numeral: true,
     numeralThousandsGroupStyle: "thousand",
     delimiter: " ",
@@ -15,7 +17,7 @@ function init(getData) {
 
   const cleaveInput = new Cleave(input, settingCleave);
   // setRawValue устанавливает базовое значение, используется библиотекой
-  cleaveInput.setRawValue(cost);
+  cleaveInput.setRawValue(String(cost));
 
   // Событие добавляющее ошибку при неверном минимальном и максимальном значении
   input.addEventListener("input", () => {
@@ -47,15 +49,16 @@ function init(getData) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(minPrice);
+      cleaveInput.setRawValue(String(minPrice));
     }
 
     if (value > maxPrice) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(maxPrice);
+      cleaveInput.setRawValue(String(maxPrice));
     }
+
     // Обновить модель
     updateModel(input, {
       cost: parseInt(cleaveInput.getRawValue(), 10),

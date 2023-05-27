@@ -1,9 +1,9 @@
-export function debounce(func, delay = 150) {
+export function debounce(func: Function, delay = 150) {
   // Переменная для хранения отложенного таймаута
-  let timer;
+  let timer: ReturnType<typeof setTimeout>;
 
   // Возврщаем функцию, которая будет замыкаться на timer
-  return function (...args) {
+  return function (...args: unknown[]) {
     // Создаём функцию, которая содержит данные от передаваемой фукциии
     // Для последующего вызова. В том случае, если передаются и аргумент -- передаём их
     const debounceCallbacks = () => func(...args);

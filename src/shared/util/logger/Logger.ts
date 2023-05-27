@@ -1,5 +1,5 @@
 export class Logger {
-  static info(...messages) {
+  static info(...messages: any[]) {
     console.log(
       "%c[INFO]",
       "color: #42aaff",
@@ -8,7 +8,7 @@ export class Logger {
     );
   }
 
-  static success(...messages) {
+  static success(...messages: any[]) {
     console.log(
       "%c[SUCCESS]",
       "color: #50c878",
@@ -17,7 +17,7 @@ export class Logger {
     );
   }
 
-  static error(...messages) {
+  static error(...messages: any[]) {
     console.log(
       "%c[ERROR]",
       "color: #ff0000",
@@ -26,7 +26,7 @@ export class Logger {
     );
   }
 
-  static warn(...messages) {
+  static warn(...messages: any[]) {
     console.log(
       "%c[WARN]",
       "color: #ffa500",

@@ -1,11 +1,14 @@
-import { UPDATE_EVENTS } from "../shared/consts/consts.js";
-import updateModel from "../shared/util/updateModel.js";
+import { UPDATE_EVENTS } from "shared/consts/consts";
+import Cleave from "cleave.js";
+import { updateModel } from "shared/util/updateModel";
+import { GetModel } from "shared/types/common";
+import { CleaveOptions } from "cleave.js/options";
 
-function init(getData) {
-  const input = document.querySelector("#input-downpayment");
+function init(getData: GetModel) {
+  const input = document.querySelector("#input-downpayment") as HTMLInputElement;
   const { payment, getMinPayment, getMaxPayment } = getData();
 
-  const settingCleave = {
+  const settingCleave: CleaveOptions = {
     numeral: true,
     numeralThousandsGroupStyle: "thousand",
     delimiter: " ",
@@ -13,7 +16,7 @@ function init(getData) {
 
   const cleaveInput = new Cleave(input, settingCleave);
   // setRawValue устанавливает базовое значение, используется библиотекой
-  cleaveInput.setRawValue(payment);
+  cleaveInput.setRawValue(String(payment));
 
   // Событие добавляющее ошибку при неверном минимальном и максимальном значении
   input.addEventListener("input", () => {
@@ -52,14 +55,14 @@ function init(getData) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(minPayment);
+      cleaveInput.setRawValue(String(minPayment));
     }
 
     if (value > maxPayment) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(maxPayment);
+      cleaveInput.setRawValue(String(maxPayment));
     }
 
     updateModel(input, {

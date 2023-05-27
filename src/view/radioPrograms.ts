@@ -1,8 +1,9 @@
-import { UPDATE_EVENTS } from "../shared/consts/consts.js";
-import { Logger } from "../shared/util/logger/Logger.js";
-import updateModel from "../shared/util/updateModel.js";
+import { UPDATE_EVENTS } from "shared/consts/consts";
+import { Logger } from "shared/util/logger/Logger.js";
+import { updateModel } from "shared/util/updateModel";
+import { GetModel } from "shared/types/common";
 
-function init(getData) {
+function init(getData: GetModel) {
   // Если не функция, в консоли отобразится ошибка
   if (typeof getData !== "function") {
     Logger.error("getData должна быть функцией");
@@ -16,10 +17,10 @@ function init(getData) {
   } = getData().programs;
 
   // Отлавливаем по id значение и меняем на заданные
-  document.querySelector("#base-value").value = base;
-  document.querySelector("#it-value").value = it;
-  document.querySelector("#gov-value").value = gov;
-  document.querySelector("#zero-value").value = zero;
+  (document.querySelector("#base-value") as HTMLInputElement).value = String(base);
+  (document.querySelector("#it-value") as HTMLInputElement).value = String(it);
+  (document.querySelector("#gov-value") as HTMLInputElement).value = String(gov);
+  (document.querySelector("#zero-value") as HTMLInputElement).value = String(zero);
 
   // Отлалвливаем по id текст и при помози innerText меняем на заданные
   document.querySelector("#base-text").textContent = `${base * 100}%`;
@@ -33,11 +34,13 @@ function init(getData) {
     radioBtn.addEventListener("change", function () {
       Logger.info(this.id);
 
+      console.log("ID", this.id);
+
       updateModel(this, {
         selectedProgram: parseFloat(this.value),
         onUpdate: UPDATE_EVENTS.RADIO_PROGRAM,
         // id хранит название программы которую выбирает пользователь
-        id: this.id,
+        percentProgram: this.id,
       });
     });
   });

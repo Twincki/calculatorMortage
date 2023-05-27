@@ -1,7 +1,9 @@
-import { Logger } from "../shared/util/logger/Logger.js";
-import { UPDATE_EVENTS } from "../shared/consts/consts.js";
+import { Logger } from "shared/util/logger/Logger";
+import { INTEREST_RATE_PROGRAM, UPDATE_EVENTS } from "shared/consts/consts";
+import { Model, PartialModel } from "shared/types/common";
 
-let data = {
+let data: Model = {
+  percentProgram: INTEREST_RATE_PROGRAM.BASE,
   selectedProgram: 0.1,
   cost: 12000000,
   minPrice: 375000,
@@ -21,13 +23,13 @@ let data = {
   },
 };
 
-function getData() {
+function getData(): Model {
   return { ...data };
 }
 
-function setDate(newDate) {
+function setDate(newDate: PartialModel) {
   if (newDate.onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
-    if (newDate.id === "zero-value") {
+    if (newDate.percentProgram === INTEREST_RATE_PROGRAM.ZERO) {
       data.minPaymentsPercent = 0;
     } else {
       data.minPaymentsPercent = 0.15;
@@ -35,6 +37,8 @@ function setDate(newDate) {
   }
 
   if (newDate.onUpdate === UPDATE_EVENTS.INPUT_COST) {
+    if (!newDate.cost) return;
+
     // Обновление цены базовых значений -------------------------
     // Если стоимость меньше минимальной цены
     if (newDate.cost < data.minPrice) newDate.cost = data.minPrice;

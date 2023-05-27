@@ -1,10 +1,12 @@
 import noUiSlider from "nouislider";
 import wNumb from "wnumb";
-import { UPDATE_EVENTS } from "../shared/consts/consts.js";
-import updateModel from "../shared/util/updateModel.js";
+import { UPDATE_EVENTS } from "shared/consts/consts";
+import { Model } from "shared/types/common";
+import { target as TargetElement } from "nouislider/src/nouislider";
+import { updateModel } from "shared/util/updateModel";
 
-function init(getData) {
-  const slider = document.querySelector("#slider-cost");
+function init(getData: () => Model) {
+  const slider = document.querySelector("#slider-cost") as TargetElement;
   const data = getData();
 
   noUiSlider.create(slider, {
@@ -32,7 +34,7 @@ function init(getData) {
     const sliderValues = slider.noUiSlider.get();
 
     // Используем метод split для возвращения 0 строки в массиве
-    const firstValue = sliderValues.split(".")[0];
+    const firstValue = (sliderValues as any).split(".")[0];
 
     /* Парсим значение слайдера для дальнеешего возврата
      при помощи replace с заменой пробелов, удаляем пробелы при помощи регулярных выражений */
