@@ -1,5 +1,3 @@
-import { debounce } from "./../util/debounce/debounce.js";
-import { Logger } from "./../util/logger/Logger.js";
 import { UPDATE_EVENTS } from "./../consts.js";
 import updateModel from "./../util/updateModel.js";
 
@@ -44,15 +42,6 @@ function init(getData) {
       onUpdate: UPDATE_EVENTS.SLIDER_COST,
     });
   });
-
-  //initial debounceRange
-  // const debounceRange = debounce(([rangeValue]) => {
-  //   Logger.info("[SLIDER RANGE]", rangeValue);
-  // });
-
-  // slider.noUiSlider.on("update", (...args) => {
-  //   debounceRange(...args);
-  // });
 
   return slider;
 }
