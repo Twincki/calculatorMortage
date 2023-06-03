@@ -9,7 +9,7 @@ function init(getData) {
     return;
   }
 
-  // Получаем все input для дальнешего использования
+  // Получаем все input для дальнейшего использования
   const radioBtns = document.querySelectorAll('input[name="program"]');
   const { base, it, gov, zero } = getData().programs;
 
@@ -19,7 +19,7 @@ function init(getData) {
   document.querySelector("#gov-value").value = gov;
   document.querySelector("#zero-value").value = zero;
 
-  // Отлалвливаем по id текст и при помози innerText меняем на заданные
+  // Отлавливаем по id текст и при помощи innerText меняем на заданные
   document.querySelector("#base-text").textContent = base * 100 + "%";
   document.querySelector("#it-text").textContent = it * 100 + "%";
   document.querySelector("#gov-text").textContent = gov * 100 + "%";

@@ -32,11 +32,11 @@ function init(getData) {
     // Используем метод split для возвращения 0 строки в массиве
     const firstValue = sliderValues.split(".")[0];
 
-    /* Парсим значение слайдера для дальнеешего возврата
+    /* Парсим значение слайдера для дальнейшего возврата
      при помощи replace с заменой пробелов, удаляем пробелы при помощи регулярных выражений */
     const removeSpaces = parseInt(firstValue.replace(/ /g, ""));
 
-    // Обновление базовых знчаений
+    // Обновление базовых значений
     updateModel(slider, {
       cost: removeSpaces,
       onUpdate: UPDATE_EVENTS.SLIDER_COST,
