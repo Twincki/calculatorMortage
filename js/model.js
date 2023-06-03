@@ -34,12 +34,19 @@ function setDate(newDate) {
     }
   }
 
-  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_COST) {
-    // Обновление цены базовых значений -------------------------
+  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_COST || newDate.onUpdate === UPDATE_EVENTS.SLIDER_COST) {
+    // Обновление цены базовых значений стоимости недвижимости -------------------------
     // Если стоимость меньше минимальной цены
     if (newDate.cost < data.minPrice) newDate.cost = data.minPrice;
     // Если стоимость больше максимальной цены
     if (newDate.cost > data.maxPrice) newDate.cost = data.maxPrice;
+    // ----------------------------------------------------------
+
+    // Обновление цены новых значений первоначального взноса -------------------------
+    // Если стоимость меньше минимальной цены
+    if (data.payment > data.getMaxPayment()) data.payment = data.getMaxPayment();
+    // Если стоимость больше максимальной цены
+    if (data.payment < data.getMinPayment()) data.payment = data.getMinPayment()
     // ----------------------------------------------------------
   }
 
@@ -47,4 +54,6 @@ function setDate(newDate) {
   Logger.success("[UPDATED MODEL DATA]", data);
 }
 
+
 export { getData, setDate };
+

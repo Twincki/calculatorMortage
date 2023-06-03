@@ -34,24 +34,31 @@ window.onload = function () {
   document.addEventListener("updateForm", ({ detail }) => {
     Model.setDate(detail);
     // Обновление всего что связанно с внешним видом формы основываясь на  данных из модели
-    updateFormAndSlider(getData());
+    updateForm(getData());
     // Обновление значений на странице
     updateResultView(detail.selectedProgram);
   });
 
-  function updateFormAndSlider({ onUpdate, cost, minPaymentsPercent }) {
+  function updateForm({ onUpdate, cost, minPaymentsPercent, payment }) {
     // Обновление
+
+    // Проценты для программы zero
     if (onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
       updateMinPercents(minPaymentsPercent);
-      console.log(minPaymentsPercent);
     }
     // Значение стоимости недвижимости
     if (onUpdate !== UPDATE_EVENTS.INPUT_COST) {
       cleaveCost.setRawValue(cost);
     }
-    // Значение стоимости недвмижимости слайдера
+    // Значение стоимости недвижимости слайдера
     if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
       sliderCost.noUiSlider.set(cost);
     }
+
+    // Значение первоначального взноса
+    if (onUpdate !== UPDATE_EVENTS.INPUT_PAYMENT) {
+      cleavePayment.setRawValue(parseInt(payment))
+    }
+
   }
-};
+}; 
