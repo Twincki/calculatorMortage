@@ -3,7 +3,7 @@ import updateModel from "./../util/updateModel.js";
 
 function init(getData) {
   const slider = document.querySelector("#slider-downpayment");
-  const { minPaymentsPercent, maxPaymentsPercent, paymentsPercent } = getData();
+  const { paymentsPercent, minPaymentsPercent, maxPaymentsPercent } = getData();
 
   noUiSlider.create(slider, {
     start: paymentsPercent * 100,

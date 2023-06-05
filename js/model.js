@@ -50,6 +50,14 @@ function setDate(newDate) {
     // ----------------------------------------------------------
   }
 
+  // При изменении слайдера возвращает нецелое число для последующего подсчета процентов
+  if (newDate.onUpdate === UPDATE_EVENTS.SLIDER_PAYMENT) {
+    newDate.paymentsPercent = newDate.paymentsPercent / 100
+    // Синхронизируем slider с input
+    newDate.payment = data.cost * newDate.paymentsPercent
+  }
+
+
   data = { ...data, ...newDate };
   Logger.success("[UPDATED MODEL DATA]", data);
 }

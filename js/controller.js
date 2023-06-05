@@ -42,18 +42,27 @@ window.onload = function () {
     updateResultView(detail.selectedProgram);
   });
 
-  function updateForm({ onUpdate, cost, minPaymentsPercent, payment }) {
-    // Обновление
+  function updateForm({ onUpdate, cost, minPaymentsPercent, maxPaymentsPercent, payment }) {
+    const range = {
+      range: {
+        min: minPaymentsPercent * 100,
+        max: maxPaymentsPercent * 100,
+      }
+    }
 
+    // Обновление
     // Проценты для программы zero
     if (onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
       updateMinPercents(minPaymentsPercent);
+      // При помощи библиотеки (данный способ есть в документации) обновляем минимальное значение
+      sliderPayment.noUiSlider.updateOptions(range)
     }
+
     // Значение стоимости недвижимости
     if (onUpdate !== UPDATE_EVENTS.INPUT_COST) {
       cleaveCost.setRawValue(cost);
     }
-    // Значение стоимости недвижимости слайдера
+    // Значение стоимости недвижимости слайдера стоимости недвижимости
     if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
       sliderCost.noUiSlider.set(cost);
     }
