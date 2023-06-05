@@ -3,18 +3,18 @@ import updateModel from "./../util/updateModel.js";
 
 function init(getData) {
   const slider = document.querySelector("#slider-cost");
-  const data = getData();
+  const { cost, minPrice, maxPrice } = getData();
 
   noUiSlider.create(slider, {
-    start: data.cost,
+    start: cost,
     connect: "lower",
     tooltips: true,
     step: 100000,
     range: {
-      min: data.minPrice,
+      min: minPrice,
       "1%": [400000, 100000],
       "50%": [10000000, 500000],
-      max: data.maxPrice,
+      max: maxPrice,
     },
 
     format: wNumb({
