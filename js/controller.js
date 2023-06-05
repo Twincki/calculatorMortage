@@ -1,7 +1,7 @@
 import * as Model from "./model.js";
 import programs from "./view/radioPrograms.js";
 import updateResultView from "./view/updateResultsView.js";
-import { UPDATE_EVENTS } from "./consts.js";
+import { UPDATE_EVENTS } from "./invariable.js";
 import { updateMinPercents } from "./view/utils.js";
 
 // Стоимость недвижимости
@@ -10,6 +10,8 @@ import costRange from "./view/costRange.js";
 
 // Первоначальный взнос
 import paymentInput from "./view/paymentInput.js";
+import paymentRange from "./view/paymentRange.js"
+
 import { Logger } from "./util/logger/Logger.js";
 
 window.onload = function () {
@@ -24,12 +26,13 @@ window.onload = function () {
 
   // Инициализация значения стоимости недвижимости
   const cleaveCost = costInput(getData);
-
   // Инициализация значений слайдера стоимости недвижимости
   const sliderCost = costRange(getData);
 
-  // Инициализация значений слайдера стоимости недвижимости
+  // Инициализация значений первоначального взноса
   const cleavePayment = paymentInput(getData);
+  // Инициализация значений слайдера первоначального взноса
+  const sliderPayment = paymentRange(getData)
 
   document.addEventListener("updateForm", ({ detail }) => {
     Model.setDate(detail);
@@ -54,7 +57,6 @@ window.onload = function () {
     if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
       sliderCost.noUiSlider.set(cost);
     }
-
     // Значение первоначального взноса
     if (onUpdate !== UPDATE_EVENTS.INPUT_PAYMENT) {
       cleavePayment.setRawValue(parseInt(payment))

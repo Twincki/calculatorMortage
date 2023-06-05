@@ -1,5 +1,5 @@
 import { Logger } from "./util/logger/Logger.js";
-import { UPDATE_EVENTS } from "./consts.js";
+import { UPDATE_EVENTS } from "./invariable.js";
 
 let data = {
   selectedProgram: 0.1,

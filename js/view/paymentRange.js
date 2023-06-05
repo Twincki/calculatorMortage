@@ -2,19 +2,17 @@ import { UPDATE_EVENTS } from "../invariable.js";
 import updateModel from "./../util/updateModel.js";
 
 function init(getData) {
-  const slider = document.querySelector("#slider-cost");
-  const data = getData();
+  const slider = document.querySelector("#slider-downpayment");
+  const { minPaymentsPercent, maxPaymentsPercent, paymentsPercent } = getData();
 
   noUiSlider.create(slider, {
-    start: data.cost,
+    start: paymentsPercent * 100,
     connect: "lower",
     tooltips: true,
-    step: 100000,
+    step: 1,
     range: {
-      min: data.minPrice,
-      "1%": [400000, 100000],
-      "50%": [10000000, 500000],
-      max: data.maxPrice,
+      min: minPaymentsPercent * 100,
+      max: maxPaymentsPercent * 100,
     },
 
     format: wNumb({
@@ -38,8 +36,8 @@ function init(getData) {
 
     // Обновление базовых значений
     updateModel(slider, {
-      cost: removeSpaces,
-      onUpdate: UPDATE_EVENTS.SLIDER_COST,
+      paymentsPercent: removeSpaces,
+      onUpdate: UPDATE_EVENTS.SLIDER_PAYMENT,
     });
   });
 
