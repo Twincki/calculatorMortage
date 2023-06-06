@@ -38,21 +38,22 @@ window.onload = function () {
     Model.setDate(detail);
     // Обновление всего что связанно с внешним видом формы основываясь на  данных из модели
     updateForm(getData());
-    // Обновление значений на странице
+    // Обновление значений процентной ставки на странице
     updateResultView(detail.selectedProgram);
   });
 
-  function updateForm({ onUpdate, cost, minPaymentsPercent, maxPaymentsPercent, payment }) {
-    const range = {
-      range: {
-        min: minPaymentsPercent * 100,
-        max: maxPaymentsPercent * 100,
-      }
-    }
-
+  function updateForm({ onUpdate, cost, payment, minPaymentsPercent, maxPaymentsPercent, paymentsPercent }) {
     // Обновление
+
     // Проценты для программы zero
     if (onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
+      const range = {
+        range: {
+          min: minPaymentsPercent * 100,
+          max: maxPaymentsPercent * 100,
+        }
+      }
+
       updateMinPercents(minPaymentsPercent);
       // При помощи библиотеки (данный способ есть в документации) обновляем минимальное значение
       sliderPayment.noUiSlider.updateOptions(range)
@@ -62,13 +63,18 @@ window.onload = function () {
     if (onUpdate !== UPDATE_EVENTS.INPUT_COST) {
       cleaveCost.setRawValue(cost);
     }
-    // Значение стоимости недвижимости слайдера стоимости недвижимости
+    // Значение стоимости недвижимости слайдера 
     if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
       sliderCost.noUiSlider.set(cost);
     }
     // Значение первоначального взноса
     if (onUpdate !== UPDATE_EVENTS.INPUT_PAYMENT) {
       cleavePayment.setRawValue(parseInt(payment))
+    }
+
+    // Значение первоначального взноса слайдера 
+    if (onUpdate !== UPDATE_EVENTS.SLIDER_PAYMENT) {
+      sliderPayment.noUiSlider.set(paymentsPercent * 100)
     }
 
   }

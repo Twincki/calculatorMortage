@@ -38,7 +38,6 @@ function init(getData) {
       payment: value,
       onUpdate: UPDATE_EVENTS.INPUT_PAYMENT,
     });
-    console.log("value !!!", value);
   });
 
   // Событие при ошибке возвращает минимальное и максимальное значение
@@ -66,8 +65,6 @@ function init(getData) {
       payment: value,
       onUpdate: UPDATE_EVENTS.INPUT_PAYMENT,
     });
-    console.log();
-    console.log(minPayment);
   });
   return cleaveInput;
 }

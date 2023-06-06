@@ -50,8 +50,29 @@ function setDate(newDate) {
     // ----------------------------------------------------------
   }
 
+
+  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_PAYMENT) {
+    // Пересчитываем проценты %
+    newDate.paymentsPercent = (newDate.payment * 100) / data.cost / 100
+
+    // Если больше допустимых значений 
+    if (newDate.paymentsPercent > data.maxPaymentsPercent) {
+      newDate.paymentsPercent = data.maxPaymentsPercent
+      newDate.payment = data.cost * data.maxPaymentsPercent
+    }
+
+    // Если проценты меньше допустимых значений 
+    if (newDate.paymentsPercent < data.minPaymentsPercent) {
+      newDate.paymentsPercent = data.minPaymentsPercent
+      newDate.payment = data.cost * data.minPaymentsPercent
+    }
+
+  }
+
+
   // При изменении слайдера возвращает нецелое число для последующего подсчета процентов
   if (newDate.onUpdate === UPDATE_EVENTS.SLIDER_PAYMENT) {
+    // TODO: здесь требуется оптимизировать код
     newDate.paymentsPercent = newDate.paymentsPercent / 100
     // Синхронизируем slider с input
     newDate.payment = data.cost * newDate.paymentsPercent
