@@ -12,6 +12,9 @@ import costRange from "./view/costRange.js";
 import paymentInput from "./view/paymentInput.js";
 import paymentRange from "./view/paymentRange.js"
 
+// Срок кредита 
+import timeInput from "./view/timeInput.js"
+
 import { Logger } from "./util/logger/Logger.js";
 
 window.onload = function () {
@@ -33,6 +36,9 @@ window.onload = function () {
   const cleavePayment = paymentInput(getData);
   // Инициализация значений слайдера первоначального взноса
   const sliderPayment = paymentRange(getData)
+
+  //Инициализация значений срока кредита
+  const cleaveTime = timeInput(getData)
 
   document.addEventListener("updateForm", ({ detail }) => {
     Model.setDate(detail);

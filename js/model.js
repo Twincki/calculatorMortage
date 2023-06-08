@@ -10,6 +10,9 @@ let data = {
   maxPaymentsPercent: 0.9,
   paymentsPercent: 0.5,
   payment: 6000000,
+  time: 10,
+  maxTime: 30,
+  minTime: 1,
   getMinPayment: () => data.cost * data.minPaymentsPercent,
   getMaxPayment: () => data.cost * data.maxPaymentsPercent,
   onUpdate: UPDATE_EVENTS.NULL,
@@ -53,9 +56,9 @@ function setDate(newDate) {
 
   if (newDate.onUpdate === UPDATE_EVENTS.INPUT_PAYMENT) {
     // Пересчитываем проценты %
-    newDate.paymentsPercent = (newDate.payment * 100) / data.cost / 100
+    newDate.paymentsPercent = (newDate.payment * 100) / data.cost
 
-    // Если больше допустимых значений 
+    // Если проценты больше допустимых значений 
     if (newDate.paymentsPercent > data.maxPaymentsPercent) {
       newDate.paymentsPercent = data.maxPaymentsPercent
       newDate.payment = data.cost * data.maxPaymentsPercent
