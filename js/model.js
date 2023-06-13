@@ -28,21 +28,21 @@ function getData() {
   return { ...data };
 }
 
-function setDate(newDate) {
-  if (newDate.onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
-    if (newDate.id === "zero-value") {
+function setDate(newData) {
+  if (newData.onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
+    if (newData.id === "zero-value") {
       data.minPaymentsPercent = 0;
     } else {
       data.minPaymentsPercent = 0.15;
     }
   }
 
-  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_COST || newDate.onUpdate === UPDATE_EVENTS.SLIDER_COST) {
+  if (newData.onUpdate === UPDATE_EVENTS.INPUT_COST || newData.onUpdate === UPDATE_EVENTS.SLIDER_COST) {
     // Обновление цены базовых значений стоимости недвижимости -------------------------
     // Если стоимость меньше минимальной цены
-    if (newDate.cost < data.minPrice) newDate.cost = data.minPrice;
+    if (newData.cost < data.minPrice) newData.cost = data.minPrice;
     // Если стоимость больше максимальной цены
-    if (newDate.cost > data.maxPrice) newDate.cost = data.maxPrice;
+    if (newData.cost > data.maxPrice) newData.cost = data.maxPrice;
     // ----------------------------------------------------------
 
     // Обновление цены новых значений первоначального взноса -------------------------
@@ -54,36 +54,42 @@ function setDate(newDate) {
   }
 
 
-  if (newDate.onUpdate === UPDATE_EVENTS.INPUT_PAYMENT) {
+  if (newData.onUpdate === UPDATE_EVENTS.INPUT_PAYMENT) {
     // Пересчитываем проценты %
-    newDate.paymentsPercent = (newDate.payment * 100) / data.cost
+    newData.paymentsPercent = (newData.payment * 100) / data.cost
 
     // Если проценты больше допустимых значений 
-    if (newDate.paymentsPercent > data.maxPaymentsPercent) {
-      newDate.paymentsPercent = data.maxPaymentsPercent
-      newDate.payment = data.cost * data.maxPaymentsPercent
+    if (newData.paymentsPercent > data.maxPaymentsPercent) {
+      newData.paymentsPercent = data.maxPaymentsPercent
+      newData.payment = data.cost * data.maxPaymentsPercent
     }
 
     // Если проценты меньше допустимых значений 
-    if (newDate.paymentsPercent < data.minPaymentsPercent) {
-      newDate.paymentsPercent = data.minPaymentsPercent
-      newDate.payment = data.cost * data.minPaymentsPercent
+    if (newData.paymentsPercent < data.minPaymentsPercent) {
+      newData.paymentsPercent = data.minPaymentsPercent
+      newData.payment = data.cost * data.minPaymentsPercent
     }
-
   }
 
 
   // При изменении слайдера возвращает нецелое число для последующего подсчета процентов
-  if (newDate.onUpdate === UPDATE_EVENTS.SLIDER_PAYMENT) {
+  if (newData.onUpdate === UPDATE_EVENTS.SLIDER_PAYMENT) {
     // TODO: здесь требуется оптимизировать код
-    newDate.paymentsPercent = newDate.paymentsPercent / 100
+    newData.paymentsPercent = newData.paymentsPercent / 100
     // Синхронизируем slider с input
-    newDate.payment = data.cost * newDate.paymentsPercent
+    newData.payment = data.cost * newData.paymentsPercent
   }
 
+  if (newData.onUpdate === UPDATE_EVENTS.INPUT_TIME) {
+    if (newData.time < data.minTime) newData.time = data.minTime
+    if (newData.time > data.maxTime) newData.time = data.maxTime
+  }
 
-  data = { ...data, ...newDate };
+  data = { ...data, ...newData };
   Logger.success("[UPDATED MODEL DATA]", data);
+  Logger.success("[UPDATED]", newData);
+
+
 }
 
 

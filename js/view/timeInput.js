@@ -34,7 +34,7 @@ function init(getData) {
     // Обновить модель
     updateModel(input, {
       time: parseInt(cleaveInput.getRawValue()),
-      onUpdate: UPDATE_EVENTS.TIME_COST,
+      onUpdate: UPDATE_EVENTS.INPUT_TIME,
     });
   });
 
@@ -58,10 +58,11 @@ function init(getData) {
     // Обновить модель
     updateModel(input, {
       time: parseInt(cleaveInput.getRawValue()),
-      onUpdate: UPDATE_EVENTS.TIME_COST,
+      onUpdate: UPDATE_EVENTS.INPUT_TIME,
     });
   });
   return cleaveInput;
+
 }
 
 export default init;

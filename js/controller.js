@@ -14,6 +14,7 @@ import paymentRange from "./view/paymentRange.js"
 
 // Срок кредита 
 import timeInput from "./view/timeInput.js"
+import timeSlider from "./view/timeRange.js"
 
 import { Logger } from "./util/logger/Logger.js";
 
@@ -21,24 +22,30 @@ window.onload = function () {
   const getData = Model.getData;
   const { selectedProgram } = getData();
 
-  // Инициализация базовых значений
-  programs(getData);
-
   // Обновление процентной ставки программ
   updateResultView(selectedProgram);
 
-  // Инициализация значения стоимости недвижимости
+  // Инициализация ---------------------
+
+  // Базовые значения
+  programs(getData);
+
+  // Значения стоимости недвижимости
   const cleaveCost = costInput(getData);
-  // Инициализация значений слайдера стоимости недвижимости
+  // Значения слайдера стоимости недвижимости
   const sliderCost = costRange(getData);
 
-  // Инициализация значений первоначального взноса
+  // Значения первоначального взноса
   const cleavePayment = paymentInput(getData);
-  // Инициализация значений слайдера первоначального взноса
+  // Значения слайдера первоначального взноса
   const sliderPayment = paymentRange(getData)
 
-  //Инициализация значений срока кредита
+  // Значения срока кредита
   const cleaveTime = timeInput(getData)
+  // Значения слайдера срока кредита
+  const sliderTime = timeSlider(getData)
+
+  // ------------------- -------------------
 
   document.addEventListener("updateForm", ({ detail }) => {
     Model.setDate(detail);
@@ -48,7 +55,7 @@ window.onload = function () {
     updateResultView(detail.selectedProgram);
   });
 
-  function updateForm({ onUpdate, cost, payment, minPaymentsPercent, maxPaymentsPercent, paymentsPercent }) {
+  function updateForm({ onUpdate, cost, payment, minPaymentsPercent, maxPaymentsPercent, paymentsPercent, time }) {
     // Обновление
 
     // Проценты для программы zero
@@ -59,7 +66,6 @@ window.onload = function () {
           max: maxPaymentsPercent * 100,
         }
       }
-
       updateMinPercents(minPaymentsPercent);
       // При помощи библиотеки (данный способ есть в документации) обновляем минимальное значение
       sliderPayment.noUiSlider.updateOptions(range)
@@ -73,15 +79,25 @@ window.onload = function () {
     if (onUpdate !== UPDATE_EVENTS.SLIDER_COST) {
       sliderCost.noUiSlider.set(cost);
     }
-    // Значение первоначального взноса
+
+    // Значение первоначального взноса TODO: Требуется исправление
     if (onUpdate !== UPDATE_EVENTS.INPUT_PAYMENT) {
       cleavePayment.setRawValue(parseInt(payment))
     }
-
     // Значение первоначального взноса слайдера 
     if (onUpdate !== UPDATE_EVENTS.SLIDER_PAYMENT) {
       sliderPayment.noUiSlider.set(paymentsPercent * 100)
     }
 
+    // 
+    if (onUpdate !== UPDATE_EVENTS.INPUT_TIME) {
+      cleaveTime.setRawValue(time)
+    }
+    // Значение срока кредита слайдера
+    if (onUpdate !== UPDATE_EVENTS.SLIDER_TIME) {
+      sliderTime.noUiSlider.set(time)
+    }
+
   }
+  console.log("Calculator loaded!")
 }; 
