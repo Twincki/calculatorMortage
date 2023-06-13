@@ -1,5 +1,5 @@
-import { Logger } from "./util/logger/Logger.js";
-import { UPDATE_EVENTS } from "./invariable.js";
+import { Logger } from "../js/util/logger/Logger.js";
+import { UPDATE_EVENTS } from "../js/util/invariable.js";
 
 let data = {
   selectedProgram: 0.1,
@@ -80,18 +80,17 @@ function setDate(newData) {
     newData.payment = data.cost * newData.paymentsPercent
   }
 
+  // Обновление срока кредита 
   if (newData.onUpdate === UPDATE_EVENTS.INPUT_TIME) {
+    // При минимальных значениях
     if (newData.time < data.minTime) newData.time = data.minTime
+    // При максимальных значениях
     if (newData.time > data.maxTime) newData.time = data.maxTime
   }
 
   data = { ...data, ...newData };
   Logger.success("[UPDATED MODEL DATA]", data);
-  Logger.success("[UPDATED]", newData);
-
-
 }
-
 
 export { getData, setDate };
 

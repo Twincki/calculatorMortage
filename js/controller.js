@@ -1,7 +1,7 @@
-import * as Model from "./model.js";
+import * as Model from "../model/model.js";
 import programs from "./view/radioPrograms.js";
 import updateResultView from "./view/updateResultsView.js";
-import { UPDATE_EVENTS } from "./invariable.js";
+import { UPDATE_EVENTS } from "./util/invariable.js";
 import { updateMinPercents } from "./view/utils.js";
 
 // Стоимость недвижимости
@@ -26,7 +26,6 @@ window.onload = function () {
   updateResultView(selectedProgram);
 
   // Инициализация ---------------------
-
   // Базовые значения
   programs(getData);
 
@@ -44,7 +43,6 @@ window.onload = function () {
   const cleaveTime = timeInput(getData)
   // Значения слайдера срока кредита
   const sliderTime = timeSlider(getData)
-
   // ------------------- -------------------
 
   document.addEventListener("updateForm", ({ detail }) => {
@@ -89,7 +87,7 @@ window.onload = function () {
       sliderPayment.noUiSlider.set(paymentsPercent * 100)
     }
 
-    // 
+    // Значение срока кредита 
     if (onUpdate !== UPDATE_EVENTS.INPUT_TIME) {
       cleaveTime.setRawValue(time)
     }
@@ -97,7 +95,6 @@ window.onload = function () {
     if (onUpdate !== UPDATE_EVENTS.SLIDER_TIME) {
       sliderTime.noUiSlider.set(time)
     }
-
   }
   console.log("Calculator loaded!")
 }; 

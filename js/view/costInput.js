@@ -1,4 +1,4 @@
-import { UPDATE_EVENTS } from "../invariable.js";
+import { UPDATE_EVENTS } from "../util/invariable.js";
 import updateModel from "./../util/updateModel.js";
 
 function init(getData) {
