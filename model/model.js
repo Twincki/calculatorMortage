@@ -30,6 +30,8 @@ function getData() {
 
 function setDate(newData) {
   if (newData.onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
+
+    // TODO: Вынести в отдельные переменные ID's
     if (newData.id === "zero-value") {
       data.minPaymentsPercent = 0;
     } else {

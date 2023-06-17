@@ -1,3 +1,5 @@
+export const UPDATE_FORM_EVENT = 'updateForm';
+
 // События для обновления updateModel
 export const UPDATE_EVENTS = {
   // Стоимость недвижимости

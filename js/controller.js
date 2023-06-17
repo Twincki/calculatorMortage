@@ -1,8 +1,7 @@
 import * as Model from "../model/model.js";
 import programs from "./view/radioPrograms.js";
-import updateResultView from "./view/updateResultsView.js";
-import { UPDATE_EVENTS } from "./util/invariable.js";
-import { updateMinPercents } from "./view/utils.js";
+import { UPDATE_EVENTS, UPDATE_FORM_EVENT } from "./util/invariable.js";
+import { updateMinPercents } from "./util/utils.js";
 
 // Стоимость недвижимости
 import costInput from "./view/costInput.js";
@@ -16,18 +15,19 @@ import paymentRange from "./view/paymentRange.js"
 import timeInput from "./view/timeInput.js"
 import timeSlider from "./view/timeRange.js"
 
+import computation from './util/computation.js'
+
 import { Logger } from "./util/logger/Logger.js";
 
-window.onload = function () {
+function initialCalculator() {
   const getData = Model.getData;
-  const { selectedProgram } = getData();
-
-  // Обновление процентной ставки программ
-  updateResultView(selectedProgram);
-
   // Инициализация ---------------------
   // Базовые значения
   programs(getData);
+
+  // Обновление процентной ставки программ
+  // Инициализация расчёта ипотеки
+  computation(getData);
 
   // Значения стоимости недвижимости
   const cleaveCost = costInput(getData);
@@ -43,19 +43,20 @@ window.onload = function () {
   const cleaveTime = timeInput(getData)
   // Значения слайдера срока кредита
   const sliderTime = timeSlider(getData)
+
   // ------------------- -------------------
 
-  document.addEventListener("updateForm", ({ detail }) => {
+  document.addEventListener(UPDATE_FORM_EVENT, ({ detail }) => {
     Model.setDate(detail);
     // Обновление всего что связанно с внешним видом формы основываясь на  данных из модели
     updateForm(getData());
+
     // Обновление значений процентной ставки на странице
-    updateResultView(detail.selectedProgram);
+    computation(getData);
   });
 
   function updateForm({ onUpdate, cost, payment, minPaymentsPercent, maxPaymentsPercent, paymentsPercent, time }) {
     // Обновление
-
     // Проценты для программы zero
     if (onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
       const range = {
@@ -96,5 +97,7 @@ window.onload = function () {
       sliderTime.noUiSlider.set(time)
     }
   }
-  console.log("Calculator loaded!")
-}; 
+  Logger.info("CALCULATOR LOADED!");
+}
+
+document.addEventListener("DOMContentLoaded", initialCalculator);
