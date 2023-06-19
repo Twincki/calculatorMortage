@@ -21,7 +21,7 @@ function init(getData) {
     const maxPayment = getMaxPayment();
 
     const value = parseInt(cleaveInput.getRawValue());
-
+    console.log(value)
     // Проверка на мин и макс сумму первого платежа
     if (value < minPayment || value > maxPayment) {
       input.closest(".param__details").classList.add("param__details--error");

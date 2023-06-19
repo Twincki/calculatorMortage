@@ -16,4 +16,5 @@ export const UPDATE_EVENTS = {
 
   NULL: "",
   RADIO_PROGRAM: "radioProgram",
+  ZERO_VALUE: "zero-value",
 };

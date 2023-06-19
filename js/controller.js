@@ -25,8 +25,7 @@ function initialCalculator() {
   // Базовые значения
   programs(getData);
 
-  // Обновление процентной ставки программ
-  // Инициализация расчёта ипотеки
+  // Расчет ипотеки на стартовой странице
   computation(getData);
 
   // Значения стоимости недвижимости
@@ -79,9 +78,9 @@ function initialCalculator() {
       sliderCost.noUiSlider.set(cost);
     }
 
-    // Значение первоначального взноса TODO: Требуется исправление
+    // Значение первоначального взноса 
     if (onUpdate !== UPDATE_EVENTS.INPUT_PAYMENT) {
-      cleavePayment.setRawValue(parseInt(payment))
+      cleavePayment.setRawValue(payment)
     }
     // Значение первоначального взноса слайдера 
     if (onUpdate !== UPDATE_EVENTS.SLIDER_PAYMENT) {

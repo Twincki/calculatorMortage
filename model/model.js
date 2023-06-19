@@ -31,8 +31,7 @@ function getData() {
 function setDate(newData) {
   if (newData.onUpdate === UPDATE_EVENTS.RADIO_PROGRAM) {
 
-    // TODO: Вынести в отдельные переменные ID's
-    if (newData.id === "zero-value") {
+    if (newData.id === UPDATE_EVENTS.ZERO_VALUE) {
       data.minPaymentsPercent = 0;
     } else {
       data.minPaymentsPercent = 0.15;
@@ -76,10 +75,11 @@ function setDate(newData) {
 
   // При изменении слайдера возвращает нецелое число для последующего подсчета процентов
   if (newData.onUpdate === UPDATE_EVENTS.SLIDER_PAYMENT) {
-    // TODO: здесь требуется оптимизировать код
     newData.paymentsPercent = newData.paymentsPercent / 100
     // Синхронизируем slider с input
     newData.payment = data.cost * newData.paymentsPercent
+
+    newData.payment = parseInt(newData.payment)
   }
 
   // Обновление срока кредита 

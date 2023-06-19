@@ -21,7 +21,9 @@ function computation(getData) {
   // Переплата
   const totalOverpayment = totalMonthPayment * months - totalCost
 
+  // Процентная ставка
   document.querySelector("#total-percent").textContent = `${data.selectedProgram * 100}%`;
+
   document.querySelector("#total-month-payment").textContent = roundNumber(totalMonthPayment);
   document.querySelector("#total-cost").textContent = roundNumber(totalCost);
   document.querySelector("#total-overpayment").textContent = roundNumber(totalOverpayment);
