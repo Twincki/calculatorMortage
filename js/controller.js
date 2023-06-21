@@ -1,7 +1,10 @@
 import * as Model from "../model/model.js";
 import programs from "./view/radioPrograms.js";
+import computation from './util/computation.js'
 import { UPDATE_EVENTS, UPDATE_FORM_EVENT } from "./util/invariable.js";
 import { updateMinPercents } from "./util/utils.js";
+import { Logger } from "./util/logger/Logger.js";
+import applicationForm from "./view/applicationForm.js"
 
 // Стоимость недвижимости
 import costInput from "./view/costInput.js";
@@ -15,10 +18,6 @@ import paymentRange from "./view/paymentRange.js"
 import timeInput from "./view/timeInput.js"
 import timeSlider from "./view/timeRange.js"
 
-import computation from './util/computation.js'
-
-import { Logger } from "./util/logger/Logger.js";
-
 function initialCalculator() {
   const getData = Model.getData;
   // Инициализация ---------------------
@@ -27,6 +26,8 @@ function initialCalculator() {
 
   // Расчет ипотеки на стартовой странице
   computation(getData);
+
+  applicationForm()
 
   // Значения стоимости недвижимости
   const cleaveCost = costInput(getData);
@@ -96,6 +97,7 @@ function initialCalculator() {
       sliderTime.noUiSlider.set(time)
     }
   }
+
   Logger.info("CALCULATOR LOADED!");
 }
 
