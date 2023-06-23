@@ -4,7 +4,7 @@ import computation from './util/computation.js'
 import { UPDATE_EVENTS, UPDATE_FORM_EVENT } from "./util/invariable.js";
 import { updateMinPercents } from "./util/utils.js";
 import { Logger } from "./util/logger/Logger.js";
-import applicationForm from "./view/applicationForm.js"
+import applicationForm from "./util/applicationForm.js"
 
 // Стоимость недвижимости
 import costInput from "./view/costInput.js";
@@ -27,7 +27,8 @@ function initialCalculator() {
   // Расчет ипотеки на стартовой странице
   computation(getData);
 
-  applicationForm()
+  // Форма
+  applicationForm(getData)
 
   // Значения стоимости недвижимости
   const cleaveCost = costInput(getData);

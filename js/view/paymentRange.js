@@ -1,6 +1,8 @@
 import { UPDATE_EVENTS } from "../util/invariable.js";
 import updateModel from "./../util/updateModel.js";
 
+import { debounce } from "../util/debounce/debounce.js"
+
 function init(getData) {
   const slider = document.querySelector("#slider-downpayment");
   const { paymentsPercent, minPaymentsPercent, maxPaymentsPercent } = getData();
@@ -22,8 +24,8 @@ function init(getData) {
     }),
   });
 
-  // Метод on позволяет следить за событиями
-  slider.noUiSlider.on("slide", function () {
+  // Создаем функцию для debounce
+  const uiSliderUpdate = () => {
     // Функция get() используется библиотекой noUiSlider и возвращает значение слайдера
     const sliderValues = slider.noUiSlider.get();
 
@@ -39,8 +41,13 @@ function init(getData) {
       paymentsPercent: removeSpaces,
       onUpdate: UPDATE_EVENTS.SLIDER_PAYMENT,
     });
-  });
+  }
 
+  // Вызываем debounce с отложенным временем в 400 миллисекунд
+  const debounceUiSlider = debounce(uiSliderUpdate, 400)
+
+  // Метод on позволяет следить за событиями
+  slider.noUiSlider.on("slide", debounceUiSlider);
   return slider;
 }
 
