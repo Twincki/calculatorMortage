@@ -43,8 +43,8 @@ function init(getData) {
     });
   }
 
-  // Вызываем debounce с отложенным временем в 400 миллисекунд
-  const debounceUiSlider = debounce(uiSliderUpdate, 400)
+  // Вызываем debounce с отложенным временем в 5 миллисекунд
+  const debounceUiSlider = debounce(uiSliderUpdate, 5)
 
   // Метод on позволяет следить за событиями
   slider.noUiSlider.on("slide", debounceUiSlider);

@@ -52,6 +52,9 @@ function setDate(newData) {
     // Если стоимость больше максимальной цены
     if (data.payment < data.getMinPayment()) data.payment = data.getMinPayment()
     // ----------------------------------------------------------
+
+    // Обновление слайдера payment при изменении слайдера cost
+    data.paymentsPercent = (data.payment * 100) / newData.cost / 100
   }
 
 
@@ -70,6 +73,7 @@ function setDate(newData) {
       newData.paymentsPercent = data.minPaymentsPercent
       newData.payment = data.cost * data.minPaymentsPercent
     }
+
   }
 
 

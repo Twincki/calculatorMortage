@@ -79,13 +79,13 @@ function form(getData) {
       orderForm.classList.add('none');
 
       // На основе ответа от сервера показываем сообщения об Успехе или Ошибке
-
+      if (result === 'SUCCESS') {
+        document.getElementById('success').classList.remove('none');
+      } else {
+        document.getElementById('error').classList.remove('none');
+      }
     }
   })
-
-
-
-
 }
 
 export default form
