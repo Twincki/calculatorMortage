@@ -1,20 +1,18 @@
-import { UPDATE_EVENTS } from "../util/invariable.js";
-import updateModel from "./../util/updateModel.js";
-
-import { debounce } from "../util/debounce/debounce.js"
+import { UPDATE_EVENTS } from "../../util/invariable.js";
+import updateModel from "../../util/updateModel.js";
 
 function init(getData) {
-  const slider = document.querySelector("#slider-downpayment");
-  const { paymentsPercent, minPaymentsPercent, maxPaymentsPercent } = getData();
+  const slider = document.querySelector("#slider-term");
+  const { time, maxTime, minTime } = getData();
 
   noUiSlider.create(slider, {
-    start: paymentsPercent * 100,
+    start: time,
     connect: "lower",
     tooltips: true,
     step: 1,
     range: {
-      min: minPaymentsPercent * 100,
-      max: maxPaymentsPercent * 100,
+      min: minTime,
+      max: maxTime,
     },
 
     format: wNumb({
@@ -24,8 +22,8 @@ function init(getData) {
     }),
   });
 
-  // Создаем функцию для debounce
-  const uiSliderUpdate = () => {
+  // Метод on позволяет следить за событиями
+  slider.noUiSlider.on("slide", function () {
     // Функция get() используется библиотекой noUiSlider и возвращает значение слайдера
     const sliderValues = slider.noUiSlider.get();
 
@@ -38,16 +36,11 @@ function init(getData) {
 
     // Обновление базовых значений
     updateModel(slider, {
-      paymentsPercent: removeSpaces,
-      onUpdate: UPDATE_EVENTS.SLIDER_PAYMENT,
+      time: removeSpaces,
+      onUpdate: UPDATE_EVENTS.SLIDER_TIME,
     });
-  }
+  });
 
-  // Вызываем debounce с отложенным временем в 5 миллисекунд
-  const debounceUiSlider = debounce(uiSliderUpdate, 5)
-
-  // Метод on позволяет следить за событиями
-  slider.noUiSlider.on("slide", debounceUiSlider);
   return slider;
 }
 

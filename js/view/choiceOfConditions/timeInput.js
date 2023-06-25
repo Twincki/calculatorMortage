@@ -1,5 +1,5 @@
-import { UPDATE_EVENTS } from "../util/invariable.js";
-import updateModel from "../util/updateModel.js";
+import { UPDATE_EVENTS } from "../../util/invariable.js";
+import updateModel from "../../util/updateModel.js";
 
 function init(getData) {
   const input = document.querySelector("#input-term");

@@ -27,9 +27,8 @@ function form(getData) {
       input.setAttribute("disabled", true)
     });
 
-    // TODO: Вынести в отдельный файл
-    fetchData()
 
+    fetchData()
     async function fetchData() {
       let url = checkOnUrl(document.location.href);
 
