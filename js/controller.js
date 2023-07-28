@@ -7,16 +7,16 @@ import { Logger } from "./util/logger/Logger.js";
 import applicationForm from "./util/applicationForm.js"
 
 // Стоимость недвижимости
-import costInput from "./view/choiceOfConditions/costInput.js";
-import costRange from "./view/choiceOfConditions/costRange.js";
+import costInput from "./view/costInput.js";
+import costRange from "./view/costRange.js";
 
 // Первоначальный взнос
-import paymentInput from "./view/choiceOfConditions/paymentInput.js";
-import paymentRange from "./view/choiceOfConditions/paymentRange.js"
+import paymentInput from "./view/paymentInput.js";
+import paymentRange from "./view/paymentRange.js"
 
 // Срок кредита 
-import timeInput from "./view/choiceOfConditions/timeInput.js"
-import timeSlider from "./view/choiceOfConditions/timeRange.js"
+import timeInput from "./view/timeInput.js"
+import timeSlider from "./view/timeRange.js"
 
 function initialCalculator() {
   const getData = Model.getData;

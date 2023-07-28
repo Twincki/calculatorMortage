@@ -1,10 +1,9 @@
-import { UPDATE_EVENTS } from "../../util/invariable.js";
-import updateModel from "../../util/updateModel.js";
+import { UPDATE_EVENTS } from "../util/invariable.js";
+import updateModel from "../util/updateModel.js";
 
 function init(getData) {
-  const input = document.querySelector("#input-cost");
-
-  const { minPrice, maxPrice, cost } = getData();
+  const input = document.querySelector("#input-downpayment");
+  const { payment, getMinPayment, getMaxPayment } = getData();
 
   const settingCleave = {
     numeral: true,
@@ -14,18 +13,20 @@ function init(getData) {
 
   const cleaveInput = new Cleave(input, settingCleave);
   // setRawValue устанавливает базовое значение, используется библиотекой
-  cleaveInput.setRawValue(cost);
+  cleaveInput.setRawValue(payment);
 
   // Событие добавляющее ошибку при неверном минимальном и максимальном значении
   input.addEventListener("input", function () {
-    // getRawValue возвращает записанное значение, используется библиотекой
-    const value = parseInt(cleaveInput.getRawValue());
+    const minPayment = getMinPayment();
+    const maxPayment = getMaxPayment();
 
-    if (value < minPrice || value > maxPrice) {
+    const value = parseInt(cleaveInput.getRawValue());
+    // Проверка на мин и макс сумму первого платежа
+    if (value < minPayment || value > maxPayment) {
       input.closest(".param__details").classList.add("param__details--error");
     }
 
-    if (value >= minPrice && value <= maxPrice) {
+    if (value >= minPayment && value <= maxPayment) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
@@ -33,32 +34,35 @@ function init(getData) {
 
     // Обновить модель
     updateModel(input, {
-      cost: parseInt(cleaveInput.getRawValue()),
-      onUpdate: UPDATE_EVENTS.INPUT_COST,
+      payment: value,
+      onUpdate: UPDATE_EVENTS.INPUT_PAYMENT,
     });
   });
 
   // Событие при ошибке возвращает минимальное и максимальное значение
   input.addEventListener("change", function () {
+    const minPayment = getMinPayment();
+    const maxPayment = getMaxPayment();
+
     const value = parseInt(cleaveInput.getRawValue());
 
-    if (value < minPrice) {
+    if (value < minPayment) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(minPrice);
+      cleaveInput.setRawValue(minPayment);
     }
 
-    if (value > maxPrice) {
+    if (value > maxPayment) {
       input
         .closest(".param__details")
         .classList.remove("param__details--error");
-      cleaveInput.setRawValue(maxPrice);
+      cleaveInput.setRawValue(maxPayment);
     }
-    // Обновить модель
+
     updateModel(input, {
-      cost: parseInt(cleaveInput.getRawValue()),
-      onUpdate: UPDATE_EVENTS.INPUT_COST,
+      payment: value,
+      onUpdate: UPDATE_EVENTS.INPUT_PAYMENT,
     });
   });
   return cleaveInput;

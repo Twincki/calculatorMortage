@@ -1,6 +1,8 @@
 import { Logger } from "../js/util/logger/Logger.js";
 import { UPDATE_EVENTS } from "../js/util/invariable.js";
 
+import { debounce } from "../js/util/debounce/debounce.js"
+
 let data = {
   selectedProgram: 0.1,
   cost: 12000000,
@@ -93,7 +95,6 @@ function setDate(newData) {
     // При максимальных значениях
     if (newData.time > data.maxTime) newData.time = data.maxTime
   }
-
   data = { ...data, ...newData };
   Logger.success("[UPDATED MODEL DATA]", data);
 }
